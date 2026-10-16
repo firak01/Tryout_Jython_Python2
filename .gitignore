@@ -1,0 +1,13 @@
+# Jython cache
+**/.jython_cache/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Eclipse workspace metadata
+.metadata/
+
+# Operating system
+Thumbs.db
+.DS_Store
