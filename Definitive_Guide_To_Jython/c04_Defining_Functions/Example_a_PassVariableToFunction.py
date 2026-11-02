@@ -1,4 +1,6 @@
 '''
+Auszug aus dem Buch: "Definitive Guide to Jython"
+
 Created on 31.10.2026
 
 @author: Fritz Lindhauer

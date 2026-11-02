@@ -5,7 +5,7 @@ Created on 31.10.2026
 @author: Fritz Lindhauer
 
 
-Auszug aus dem Buch:
+Auszug aus dem Buch: "Definitive Guide to Jython"
 
 
 Using def for define seems simple enough, 
