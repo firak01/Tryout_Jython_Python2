@@ -11,6 +11,12 @@ and a double ** argument allows for passing a dictionary of names and values.
 If either of these types of argument is specified, they must follow any single arguments in the function declaration. 
 Furthermore, the double ** must follow the single *.
 
+Merke:
+Mehr zu Tupel gibt es hier
+Tryout_Python\Python3_HandbuchFGL\c12_3_Nicht_zwingend_unveraenderliche_Listen_Tupel\Example_a_PackagingAndUnpackaging.py
+Dort wird auch ersichtliche, dass es unter Python3 "EXTENDED UNPACKAGING" gibt, unter Jython mit Python2 aber noch nicht.
+
+
 Created on 02.11.2026
 
 @author: Fritz Lindhauer
