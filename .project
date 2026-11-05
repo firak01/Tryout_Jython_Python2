@@ -3,6 +3,7 @@
 	<name>Tryout_Jython_Python2</name>
 	<comment></comment>
 	<projects>
+		<project>JAZKernelEngine</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

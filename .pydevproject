@@ -4,5 +4,6 @@
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">jython interpreter</pydev_property>
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
 <path>/${PROJECT_DIR_NAME}/Definitive_Guide_To_Jython</path>
+<path>/${PROJECT_DIR_NAME}/JAZKernelEnginePYZ</path>
 </pydev_pathproperty>
 </pydev_project>
