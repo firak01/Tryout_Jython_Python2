@@ -28,15 +28,52 @@ class JavaClasspathLoaderZZZ(object):
         self._sBasePath = os.path.abspath(sBasePath)
         self._loaded = []
 
-    def resolvePath(self, sPath):
+    
+    def resolvePath(self, sPath, sBasePath=None):
         """
-        Löst einen relativen Pfad relativ zum Basisverzeichnis auf.
+        Löst einen relativen Pfad auf.
+    
+        Ohne sBasePath wird das Repository-Basisverzeichnis verwendet.
+        Mit sBasePath wird das übergebene Basisverzeichnis verwendet.
         """
-
+    
+        if sBasePath is None:
+            sBasePath = self._sBasePath
+    
         if not os.path.isabs(sPath):
-            sPath = os.path.join(self._sBasePath, sPath)
-
+            sPath = os.path.join(sBasePath, sPath)
+    
         return os.path.abspath(sPath)
+    
+    
+    def resolveWorkspacePath(self, sPath, sWorkspacePath):
+        """
+        Löst einen Pfad relativ zum Eclipse Workspace auf.
+    
+        Unterstützt auch Einträge wie:
+            \\ZKernelFileCollection\\commons-lang-2.1.jar
+    
+        Ein einzelner führender Backslash wird dabei als
+        Workspace-relativer Pfad interpretiert.
+        """
+    
+        if not sWorkspacePath:
+            raise ValueError("Eclipse Workspace Pfad fehlt!")
+    
+        # Absolute Pfade mit Laufwerksbuchstaben oder UNC bleiben erhalten.
+        sDrive, sTail = os.path.splitdrive(sPath)
+    
+        if sDrive:
+            return os.path.abspath(sPath)
+    
+        # Ein einzelner führender Backslash bedeutet hier:
+        # relativ zum Workspace, nicht zum Laufwerksstamm.
+        sPath = sPath.lstrip("\\/")
+    
+        return os.path.abspath(
+            os.path.join(sWorkspacePath, sPath)
+        )
+
 
     def addPath(self, sPath):
         """
@@ -75,34 +112,62 @@ class JavaClasspathLoaderZZZ(object):
 
         return iCount
 
-    def addClasspathFile(self, sFilename):
+    
+    def addClasspathFile(self, sFilename, sWorkspacePath=None):
         """
-        Liest eine Maven-Classpath-Datei ein.
+        Liest eine Classpath-Datei ein.
+    
+        sFilename:
+            Pfad zur Classpath-Datei.
+            Relativ zum Repository-Basisverzeichnis.
+    
+        sWorkspacePath:
+            Optionaler Eclipse Workspace Pfad.
+            Wenn angegeben, werden die Einträge der
+            Classpath-Datei relativ zum Workspace aufgelöst.
         """
-
+    
         sFilename = self.resolvePath(sFilename)
-
+    
         if not os.path.isfile(sFilename):
             print("Classpath-Datei nicht gefunden: " + sFilename)
             return 0
-
+    
         f = open(sFilename, 'r')
-
+    
         try:
             sClasspath = f.read().strip()
         finally:
             f.close()
-
+    
         if not sClasspath:
             return 0
+    
+        # Windows: Semikolon als Trennzeichen
+        aPaths = sClasspath.split(';')
+    
+        iCount = 0
+    
+        for sPath in aPaths:
+    
+            sPath = sPath.strip()
+    
+            if not sPath:
+                continue
+    
+            # Workspace-relative Pfade
+            if sWorkspacePath is not None:
+                sPath = self.resolveWorkspacePath(
+                    sPath,
+                    sWorkspacePath
+                )
+    
+            # Maven-Pfade bzw. bereits aufgelöste Pfade
+            if self.addPath(sPath):
+                iCount += 1
+    
+        return iCount
 
-        aPaths = sClasspath.split(os.pathsep)
-
-        # Maven-Pfade sind normalerweise absolut.
-        # Falls relative Pfade enthalten sind,
-        # werden sie ebenfalls relativ zum Basisverzeichnis aufgelöst.
-
-        return self.addPaths(aPaths)
 
     def getLoadedPaths(self):
         return list(self._loaded)
