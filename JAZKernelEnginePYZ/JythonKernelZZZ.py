@@ -1,98 +1,89 @@
 # -*- coding: utf-8 -*-
-
-'''
-
-Klasse für die Initialisierung von Jython für die Zusammenarbeit mit den ZKernel-Projekten
-- lade die notwendigen Java-Bibliotheken der Projekte
-
-
-Created on 06.11.2026
-
-@author: Fritz Lindhauer
-'''
+"""Initializes Jython's Java classpath for one or more Eclipse projects."""
 
 import os
-import sys
-from test.test_re import todo_on_jython
-from tryout01_String02ZZZ import sWorkspace
+
 
 class JythonKernelZZZ(object):
-    
-    def __init__(self):
-        # Umgebungsvariablen auslesen, insbesondere die, die beim EclipseStart per Batch gesetzt werden
-        # import os
-        sWorkspace = os.environ.get("MY_DATA")
-        
-        if not sWorkspace:
+
+    def __init__(self, sWorkspace=None, oLoader=None):
+        # MY_DATA is the Eclipse workspace root used by the generated
+        # workspace-relative classpath files.
+        self.sWorkspace = sWorkspace or os.environ.get("MY_DATA")
+        if not self.sWorkspace:
             raise Exception("Umgebungsvariable MY_DATA nicht gesetzt!")
-        
-        print("Eclipse Workspace Verzeichnis:")
-        print(sWorkspace)
-        
-        # Classpath konfigurieren
+        self.sWorkspace = os.path.abspath(self.sWorkspace)
+
         from JavaClasspathLoaderZZZ import JavaClasspathLoaderZZZ
-        oLoader = JavaClasspathLoaderZZZ()
-        
+        self.oLoader = oLoader or JavaClasspathLoaderZZZ()
+        self.dProject = {}
+
+        print("Eclipse Workspace Verzeichnis:")
+        print(self.sWorkspace)
         print("Basisverzeichnis (Repository-Verzeichnis):")
-        print(oLoader.getBasePath())
-        
+        print(self.oLoader.getBasePath())
+
     def addProject(self, sProjectName, sProjectPath):
-        TODOGOON #fülle hier das dictionary mit den notwendigen Projekten        
+        """Register a project path relative to MY_DATA / relative to the current code directory (or an absolute path)."""
+        if not sProjectName:
+            raise ValueError("Projektname darf nicht leer sein!")
+        if not sProjectPath:
+            raise ValueError("Projektpfad darf nicht leer sein!")
+        self.dProject[sProjectName] = sProjectPath
         return True
-        
+
     def getProjectPathForProject(self, sProjectName):
-        TODOGOON #lies den Eintrag aus dem dictionary und fülle sProjectPath
-        sProjectPath = "Name aus dem dictionary ausgelesen"
-        return sProjectPath
-    
+        if sProjectName not in self.dProject:
+            raise KeyError("Projekt nicht registriert: " + str(sProjectName))
+        sProjectPath = self.dProject[sProjectName]
+        if not os.path.isabs(sProjectPath):           
+            # Erst aus dem Projekt zurück zum Root (Das ist der Root des Repositories)
+            sProjectPath = os.path.join("..","..", sProjectPath) 
+        return os.path.abspath(sProjectPath)
+
     def loadProjectPaths(self):
-        TODOGOON # arbeite die Enträge aus dem dictionary ab
-                 # in einer Schleife aufrufen loadProjectPath(sProjectname)
-        return True
-        
-    
+        iCount = 0
+        for sProjectName in self.dProject:
+            if self.loadProjectPath(sProjectName):
+                iCount += 1
+        return iCount
+
     def loadProjectPath(self, sProjectName):
-        import os
-        sWorkspace = os.environ.get("MY_DATA")
-
-        if not sWorkspace:
-            raise Exception("Umgebungsvariable MY_DATA nicht gesetzt!")
-
-        
-        #########################################################
-        # holen aus dem Dictionary für den sProjectName den definierten sPrjectPath
+         # holen aus dem Dictionary für den sProjectName den definierten sPrjectPath
         sProjectPath = self.getProjectPathForProject(sProjectName)
         
-        # Java-Projekt einbinden
-        # Beispiel:   r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classes"
-        sProjectPath4Java = r"'..\..\' sProjectPath '\target\classes'"
-        self.oLoader.addPath(sProjectPath4Java)
+        #sProjectPath = os.path.join("..", "..", sProjectPath) 
         
-        # ZKernelFileCollection Bibliotheksabhängigkeiten des Projekts einbinden.
+        # Load compiled project classes and the three generated dependency lists.
+        
+        # 1) Java-Projekt einbinden
+        # Beispiel:   r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classes"      
+        sClasses = os.path.join(sProjectPath, "target", "classes")
+        self.oLoader.addPath(sClasses)
+
+        # 2) Andere Bibliotheken einbinden, die im Projekt - wie auch immer - referenziert werden
+        sClasspathFileDirectory = os.path.join(sProjectPath, "target", "classpathZZZ")
+        
+        # 2a) ZKernelFileCollection Bibliotheksabhängigkeiten des Projekts einbinden.
         # Diese sind relativ zum Eclipse Workspace angegeben. Dieser Pfad wird über meine Batch beim Eclipsestart gesetzt.
         # Mehrere Pfade werden mit Semikolon getrennt.
         # Z.B.: \ZKernelFileCollection\commons-lang-2.1.jar
         #
         # Wichtig: zusätzliche Argument sWorkspace am Ende
         # Beispiel: r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesWorkspaceZZZ.txt", sWorkspace
-        sProjectPath4Workspace = r"'..\..\' sProjectPath '\target\classpathZZZ\classpathOfLibrariesWorkspaceZZZ.txt'"       
-        self.oLoader.addClasspathFile(sProjectPath4Workspace, sWorkspace)
+        sWorkspaceFile = os.path.join(sClasspathFileDirectory, "classpathOfLibrariesWorkspaceZZZ.txt")
         
-        # Maven-Abhängigkeiten des Projekts einbinden.
+        # 2b) Maven-Abhängigkeiten des Projekts einbinden.
         # Diese sind als absoluter Pfad angegeben, mehrere Pfade mit Semikolon getrennt.
-        # Beispiel: r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesByMavenZZZ.txt"
-        sProjectPath4Maven = r"'..\..\' sProjectPath 'target\classpathZZZ\classpathOfLibrariesByMavenZZZ.txt'"
-        self.oLoader.addClasspathFile(sProjectPath4Maven)
+        # Beispiel: r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesByMavenZZZ.txt"       
+        sMavenFile = os.path.join(sClasspathFileDirectory, "classpathOfLibrariesByMavenZZZ.txt")
         
-        # Sonstige Externe Bibliotheksabhängigkeiten des Projekts einbinden.
-        # Diese sind als absoluter Pfad angegeben, mehrere Pfade mit Semikolon getrennt.
-        # alternativ zum Einbinden in vmargs bei der Launch Konfiguration, wie:
-        # -Dpython.path=C:\1fgl\workspace\EclipseOxygen_V02\ZKernelFileCollection\commons-lang-2.1.jar
-        # Beispiel: r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesExternalZZZ.txt"
-        sProjectPath4External = r"'..\..\' sProjectPath 'target\classpathZZZ\classpathOfLibrariesExternalZZZ.txt'"
-        self.oLoader.addClasspathFile(sProjectPath4External)   
-        
-        
-        
-        
-                
+        # 2c) 
+        sExternalFile = os.path.join(sClasspathFileDirectory, "classpathOfLibrariesExternalZZZ.txt")
+
+        # 3) Lade die Libraries, die in den oben definierten Dateien erfasst sind. Entweder als absoluten Pfad, oder als Pfad relativ zum Workspace 
+        iAdded = 0
+        iAdded += self.oLoader.addClasspathFile(sWorkspaceFile, self.sWorkspace)
+        iAdded += self.oLoader.addClasspathFile(sMavenFile)
+        iAdded += self.oLoader.addClasspathFile(sExternalFile)
+        return iAdded > 0
