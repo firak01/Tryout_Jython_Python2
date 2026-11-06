@@ -1,6 +1,9 @@
 # Jython cache
 **/.jython_cache/
 
+# Jython class
+*.class
+
 # Python cache
 __pycache__/
 *.py[cod]
