@@ -1,5 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Initializes Jython's Java classpath for one or more Eclipse projects."""
+
+'''
+Klasse für die Initialisierung von Jython für die Zusammenarbeit mit den ZKernel-Eclipse-Projekten
+- lade die notwendigen Java-Bibliotheken der Projekte / Initializes Jython's Java classpath for one or more Eclipse projects.
+
+
+Created on 06.11.2026
+
+@author: Fritz Lindhauer
+'''
+
 
 import os
 

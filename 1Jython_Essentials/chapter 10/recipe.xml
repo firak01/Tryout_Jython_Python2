@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<recipe>
+    <name>Peanut Butter &amp; Jelly Sandwich</name>
+    <ingredient amount="1/4" unit="cup">Peanut Butter</ingredient>
+    <ingredient amount="1/4" unit="cup">Strawberry Jelly</ingredient>
+    <ingredient amount="2" unit="slices">White Bread</ingredient>
+    <instruction>
+        Place the two slices of bread on a plate.
+    </instruction>
+    <instruction>Spread the peanut butter on one slice.</instruction>
+    <instruction>Spread the jelly on the other slice.</instruction>
+    <instruction>Put the slices together.</instruction>
+    <instruction>Eat!</instruction>
+</recipe>
+

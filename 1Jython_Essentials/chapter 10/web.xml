@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+    <servlet>
+        <servlet-name>PyServlet</servlet-name>
+        <servlet-class>org.python.util.PyServlet</servlet-class>
+        <init-param>
+            <param-name>python.home</param-name>             
+            <param-value>/usr/home/jython-2.1</param-value>
+         </init-param>
+     </servlet>
+     <servlet-mapping>
+        <servlet-name>PyServlet</servlet-name>
+        <url-pattern>*.py</url-pattern>
+    </servlet-mapping>
+</web-app>
+

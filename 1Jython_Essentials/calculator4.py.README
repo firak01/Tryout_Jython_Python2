@@ -1,0 +1,12 @@
+This is a modifed calculator.py with some comments, that works both
+with pre 1.4 JDK AWT and JDK 1.4 AWT, addressing the intervened mechanics
+change. It is surely not the be-all about key event capturing and focus issues,
+but it makes the example work as it worked with JDK 1.3.
+
+With JDK 1.4 Sun has changed the way key event dispatching and focus are managed.
+http://java.sun.com/j2se/1.4/docs/api/java/awt/doc-files/FocusSpec.html
+Succintly, prior to JDK 1.4  top level windows received "always" key event, now
+key events go to a KeyboardFocusManager that dispatches only to the focus owner
+(which is not in general/always the top frame) or to explicitly set chained
+dispatchers. This makes no difference for textfields etc which receive focus
+upon editing, but it does in our case.

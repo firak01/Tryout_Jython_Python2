@@ -1,0 +1,10 @@
+<html>
+<head><title>Jython template page</title></head>
+
+<body>
+    <h2>Hello, %(name)s</h2>
+    <p>The time is: <b>%(time)s</b></p>
+    <p>The date is: <b>%(date)s</b></p>
+</body>
+</html>
+
