@@ -23,15 +23,27 @@ print("Eclipse Workspace Verzeichnis:")
 print(sWorkspace)
 
 # Classpath konfigurieren
-from JavaClasspathLoaderZZZ import JavaClasspathLoaderZZZ
+# Das reicht nicht, da in __init__.py der JavaClasspathLoaderZZZ nicht "nach aussen kommuniziert" wird.
+# from basic.jython.jazkernel import *
+# Also muss man die Klasse direkt importieren
+from basic.jython.jazkernel.JavaClasspathLoaderZZZ import JavaClasspathLoaderZZZ
 oLoader = JavaClasspathLoaderZZZ()
 
 print("Basisverzeichnis (Repository-Verzeichnis):")
 print(oLoader.getBasePath())
 
+#depth=5
+#sDepth='..\\' * 5
+sDepth=oLoader.getBasePathOffsetString()
+
+print("Basisverzeichnis (Repository-Verzeichnis):")
+print(oLoader.getBasePath())
+print("Verzeichnis Offset String (vom Verzeichnis des JavaClasspathLoaderZZZ ausgehend auf das Basisverzeichnis:")
+print(sDepth)
+
 # Java-Projekt einbinden
 oLoader.addPath(
-    r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classes"
+    r"Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classes"
 )
 
 # ZKernelFileCollection Bibliotheksabhängigkeiten des Projekts einbinden.
@@ -41,13 +53,13 @@ oLoader.addPath(
 #
 # Wichtig: zusätzliche Argument sWorkspace am Ende
 oLoader.addClasspathFile(
-    r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesWorkspaceZZZ.txt", sWorkspace
+    r"Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesWorkspaceZZZ.txt", sWorkspace
 )
 
 # Maven-Abhängigkeiten des Projekts einbinden.
 # Diese sind als absoluter Pfad angegeben, mehrere Pfade mit Semikolon getrennt.
 oLoader.addClasspathFile(
-    r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesByMavenZZZ.txt"
+    r"Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesByMavenZZZ.txt"
 )
 
 # Sonstige Externe Bibliotheksabhängigkeiten des Projekts einbinden.
@@ -55,7 +67,7 @@ oLoader.addClasspathFile(
 # alternativ zum Einbinden in vmargs bei der Launch Konfiguration, wie:
 # -Dpython.path=C:\1fgl\workspace\EclipseOxygen_V02\ZKernelFileCollection\commons-lang-2.1.jar
 oLoader.addClasspathFile(
-    r"..\..\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesExternalZZZ.txt"
+    r"Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classpathZZZ\classpathOfLibrariesExternalZZZ.txt"
 )
 
 

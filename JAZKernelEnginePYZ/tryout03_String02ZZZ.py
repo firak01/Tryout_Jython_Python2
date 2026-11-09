@@ -13,7 +13,8 @@ Created on 04.11.2026
 '''
 
 # Classpath konfigurieren
-from JythonKernelZZZ import JythonKernelZZZ
+# Das reicht, da in __init__.py der JythonKernelZZZ "nach aussen kommuniziert" wird.
+from basic.jython.jazkernel import *
 oJythonKernel = JythonKernelZZZ()
 oJythonKernel.addProject('JAZKernelEngine', 'Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine')
 oJythonKernel.loadProjectPaths()

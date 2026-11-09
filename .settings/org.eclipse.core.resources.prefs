@@ -1,9 +1,11 @@
 eclipse.preferences.version=1
-encoding//JAZKernelEnginePYZ/JavaClasspathLoaderZZZ.py=utf-8
-encoding//JAZKernelEnginePYZ/JythonKernelZZZ.py=utf-8
+encoding//1Definitive_Guide_To_Jython/c05_Input_and_Output/Example_j_FileHandlingWithPickle.py=utf-8
 encoding//JAZKernelEnginePYZ/debugJavaClasspath.py=utf-8
 encoding//JAZKernelEnginePYZ/tryout01_String01ZZZ.py=utf-8
 encoding//JAZKernelEnginePYZ/tryout01_String02ZZZ.py=utf-8
 encoding//JAZKernelEnginePYZ/tryout02_FileEasy01ZZZ.py=utf-8
 encoding//JAZKernelEnginePYZ/tryout03_FileEasy01ZZZ.py=utf-8
 encoding//JAZKernelEnginePYZ/tryout03_String02ZZZ.py=utf-8
+encoding//src/basic/jython/jazkernel/JavaClasspathLoaderZZZ.py=utf-8
+encoding//src/basic/jython/jazkernel/JythonKernelZZZ.py=utf-8
+encoding//src/basic/jython/jazkernel/__init__.py=utf-8

@@ -39,11 +39,16 @@ class JavaClasspathLoaderZZZ(object):
     
         if sBasePath is None:
             sBasePath = self._sBasePath
+            
+        sBasePathOffsetString = self.getBasePathOffsetString()
     
         if not os.path.isabs(sPath):
-            sPath = os.path.join(sBasePath, sPath)
-    
-        return os.path.abspath(sPath)
+            sPath = os.path.join(sBasePath, sBasePathOffsetString, sPath)
+            
+        
+        # NEIN: os.path.abspath: Sie bereinigt dabei auch redundante Elemente wie . (aktuelles Verzeichnis) oder .. 
+        # return os.path.abspath(sPath)
+        return sPath
     
     
     def resolveWorkspacePath(self, sPath, sWorkspacePath):
@@ -67,12 +72,18 @@ class JavaClasspathLoaderZZZ(object):
             return os.path.abspath(sPath)
     
         # Ein einzelner führender Backslash bedeutet hier:
-        # relativ zum Workspace, nicht zum Laufwerksstamm.
-        sPath = sPath.lstrip("\\/")
-    
-        return os.path.abspath(
-            os.path.join(sWorkspacePath, sPath)
-        )
+        # relativ zum Workspace, nicht zum Laufwerksstamm.        
+        sPath = sPath.rstrip("\\/")
+        sPath = sPath.lstrip("\\/") #falls man doppelt hinzugefügt hätte
+            
+       
+        
+        # NEIN: os.path.abspath: Sie bereinigt dabei auch redundante Elemente wie . (aktuelles Verzeichnis) oder .. 
+        #sPathFinalTotal =  os.path.abspath(
+        #    os.path.join(sWorkspacePath, sPath)
+        #)
+        sPathFinalTotal = os.path.join(sWorkspacePath, sPath)
+        return sPathFinalTotal
 
 
     def addPath(self, sPath):
@@ -155,10 +166,12 @@ class JavaClasspathLoaderZZZ(object):
             if not sPath:
                 continue
     
-            # Workspace-relative Pfade
-            if sWorkspacePath is not None:
+            
+    
+            # Workspace-relative Pfade           
+            if sWorkspacePath is not None:               
                 sPath = self.resolveWorkspacePath(
-                    sPath,
+                    sPath,                    
                     sWorkspacePath
                 )
     
@@ -174,3 +187,14 @@ class JavaClasspathLoaderZZZ(object):
 
     def getBasePath(self):
         return self._sBasePath
+    
+    def getBasePathOffset(self):
+        # TODOGOON20261109 depth ausrechnen
+        depth=5
+        return depth
+        
+    def getBasePathOffsetString(self):
+        depth = self.getBasePathOffset()
+        sDepth='..\\' * depth
+        return sDepth
+    
