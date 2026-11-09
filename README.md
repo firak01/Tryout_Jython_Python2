@@ -12,11 +12,14 @@ Siehe dazu die letzten tryouts.
 
 ----------------------
 u.a. Ergänzungen zu den Beispiele aus den Büchern
-- "Definitive Guide To Jython" https://jython.readthedocs.io/en/latest/OpsExpressPF/
-- "Jython Essentials"          https://www.oreilly.com/library/view/jython-essentials/9781449397364/
+- "Definitive Guide To Jython" https://jython.readthedocs.io/en/latest/OpsExpressPF/ <BR>
+<BR>
+- "Jython Essentials"          https://www.oreilly.com/library/view/jython-essentials/9781449397364/ <BR>
+                               Merke: Hier sind nur die Kapitel, die von Python ausgehend Java einbinden.<BR>
+                               Kapitel 12 und 13 gehen von Java aus und binden Python ein. Sie sind im Projekt "Tryout_Jython_Java8" 
 <br>
 Bzw. sinnvoller Code / Tests in den Kapiteln<br>
-oder umfangreichere Anpassungen, z.B. aufgrund der dann im Buch verwendeten neuere Syntax.
+oder umfangreichere Anpassungen, z.B. aufgrund der dann im Buch verwendeten neueren Syntax.
 <BR>
 <BR>
 
