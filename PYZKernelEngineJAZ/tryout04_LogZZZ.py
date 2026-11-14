@@ -34,21 +34,22 @@ print(System.getProperty("java.version"))
 print("Aktueller Zeitstempel:")
 print(System.currentTimeMillis())
 
-qString='das ist toll'
-result = StringZZZ.capitalize(qString)
-print(result)
-
 # Ein Enum zu übergeben habe ich nicht geschafft. Der String ist der Workaround.
 qLevel='DEBUG'
 
 # Am Enum liegr der "Argumentanzahl" Fehler nicht. Sondern daran, das man die Schritte einzeln machen muss, also statt
 # SystemSingletonZZZ.getInstance().setPrintLevelOverall(qLevel)
 # Muss man erst eine Instanz holen und zuweisen. 
-a = SystemSingletonZZZ.getInstance()
-a.setPrintLevelOverall(qLevel) 
+systemZZZ = SystemSingletonZZZ.getInstance()
+systemZZZ.setPrintLevelOverall(qLevel) 
 
 # Das Enum ist doch übergebebar. Hauptsache oben import definiert und die Instanz des Objekts vorhanden. 
-a.setPrintLevelOverall(IPrintLevelUserZZZ.PRINTLEVEL.DEBUG)
+systemZZZ.setPrintLevelOverall(IPrintLevelUserZZZ.PRINTLEVEL.DEBUG)
 
 # Bei eingestelltem Debug level wird dies 2x ausgegeben. Einmal als einfacher String, Davor aber als Consolen-Text-Formatiert String
 Log.writeInfo("ach ein Log, endlich")
+
+# Noch einmal StringZZZ aufrufen, als positives Ergebnis ;-)
+qString='das ist toll'
+result = StringZZZ.capitalize(qString)
+print(result)
