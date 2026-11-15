@@ -15,7 +15,7 @@ Created on 04.11.2026
 # Classpath konfigurieren
 # Das reicht, da in __init__.py der JythonKernelZZZ "nach aussen kommuniziert" wird.
 from basic.jython.jazkernel import *
-oJythonKernel = JythonKernelZZZ()
+oJythonKernel = JythonKernelJYZ()
 oJythonKernel.addProject('JAZKernelEngine', 'Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine')
 oJythonKernel.loadProjectPaths()
 
@@ -43,8 +43,11 @@ qLevel='DEBUG'
 systemZZZ = SystemSingletonZZZ.getInstance()
 systemZZZ.setPrintLevelOverall(qLevel) 
 
-# Das Enum ist doch übergebebar. Hauptsache oben import definiert und die Instanz des Objekts vorhanden. 
-systemZZZ.setPrintLevelOverall(IPrintLevelUserZZZ.PRINTLEVEL.DEBUG)
+# Das Enum ist doch übergebebar. Hauptsache oben import definiert und die Instanz des Objekts vorhanden.
+# Ausserdem wieder nicht versuchen alles in eine String zu schreiben
+# IPrintLevelUserZZZ.PRINTLEVEL.DEBUG
+enumPrintLevel = IPrintLevelUserZZZ.PRINTLEVEL 
+systemZZZ.setPrintLevelOverall(enumPrintLevel.DEBUG)
 
 # Bei eingestelltem Debug level wird dies 2x ausgegeben. Einmal als einfacher String, Davor aber als Consolen-Text-Formatiert String
 Log.writeInfo("ach ein Log, endlich")

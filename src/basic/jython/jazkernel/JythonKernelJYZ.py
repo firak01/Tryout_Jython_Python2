@@ -12,9 +12,17 @@ Created on 06.11.2026
 
 
 import os
+from basic.jyzBasic.reflection import *
+from basic.jyzBasic.util.abstractArray import *
+from basic.jyzBasic.util.datatype.string import *
+
+# Cool man kann auch einzelen Variablen importieren
+# Aber klaptt wohl nur im gleichen Sourcepath, nicht hier im tryout-Path 
+#from basic.zBasic.reflection.tryout01_ReflectCode01ZZZ import sFilePathTotal
+#from basic.zBasic.reflection.tryout01_ReflectCode01ZZZ import sProjectPath
 
 
-class JythonKernelZZZ(object):
+class JythonKernelJYZ(object):
 
     def __init__(self, sWorkspace=None, oLoader=None):
         # MY_DATA is the Eclipse workspace root used by the generated
@@ -24,8 +32,8 @@ class JythonKernelZZZ(object):
             raise Exception("Umgebungsvariable MY_DATA nicht gesetzt!")
         self.sWorkspace = os.path.abspath(self.sWorkspace)
 
-        from JavaClasspathLoaderZZZ import JavaClasspathLoaderZZZ
-        self.oLoader = oLoader or JavaClasspathLoaderZZZ()
+        from JavaClasspathLoaderJYZ import JavaClasspathLoaderJYZ
+        self.oLoader = oLoader or JavaClasspathLoaderJYZ()
         self.dProject = {}
 
         print("Eclipse Workspace Verzeichnis:")
@@ -46,10 +54,57 @@ class JythonKernelZZZ(object):
         if sProjectName not in self.dProject:
             raise KeyError("Projekt nicht registriert: " + str(sProjectName))
         sProjectPath = self.dProject[sProjectName]
-        if not os.path.isabs(sProjectPath):           
-            # Erst aus dem Projekt zurück zum Root (Das ist der Root des Repositories)
-            sProjectPath = os.path.join("..","..", sProjectPath) 
-        return os.path.abspath(sProjectPath)
+        if not os.path.isabs(sProjectPath):
+            # TODOGOON20261115 #Ermittle die Anzahl der zurückzugehenden Verszeihnisse automatisch
+            '''           
+            Erst aus dem Projekt zurück zum Root (Das ist der Root des Repositories)
+            Wichtig: Ausgangslage ist das Verzeichnis, in dem die .py Datei liegt, in welcher über den Code die Java klassen importiert werden sollen, Z.B.
+                              
+                # Classpath konfigurieren
+                # Das reicht, da in __init__.py der JythonKernelZZZ "nach aussen kommuniziert" wird.
+                from basic.jython.jazkernel import *
+                oJythonKernel = JythonKernelZZZ()
+                oJythonKernel.addProject('JAZKernelEngine', 'Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine')
+                oJythonKernel.loadProjectPaths()
+              
+            
+            
+            Also, die .py Datei liegt hier:
+                C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py
+                Das sind 3 Ebenen bis zm Eclipse "repository Base" Verzeichnis
+                Demnach 3 mal in os.path.join: "..",
+                
+                
+            Mache ähnliches ins JavaClasspathLoader.py:
+            
+                def getBasePathOffset(self):
+                    # TODOGOON20261109 depth ausrechnen
+                    depth=5
+                    return depth
+
+            '''
+            
+            # Woher kommt der RepoBasis-Pfad?
+            sProjectPathRepo = r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2"
+            # sFilePathTotal  =  r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py"
+           
+            # Nein, es ist nicht der Pfad der Datei, die den import macht, sondern
+            # Der Pfad zu dieser Datei, in der wir gerade sind:
+            sFilePathTotal = r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\src\basic\jython\jazkernel\JythonKernelZZZ.py"
+            
+            #iPackageDepth = ReflectCodeZZZ.computePackageDepth(sFilePathTotal, sProjectPath)
+            #print "Pakettiefe: %s" %iPackageDepth
+            iWorkspaceDepth = ReflectCodeJYZ.computWorkspaceDepth(sFilePathTotal, sProjectPathRepo)
+            print "Workspacetiefe immer um 1 erhöht: %s" %iWorkspaceDepth
+            
+            saPathOffset = ArrayUtilJYZ.createArray("..", iWorkspaceDepth)
+            sPackageDepth = StringArrayJYZ.implode(saPathOffset, "\\")
+
+            #sProjectPath = os.path.join("..","..", sProjectPath) 
+            sProjectPath = os.path.join(sPackageDepth, sProjectPath)
+            
+        #Merke: Das entfernt redundante Pfadbestandteile und .. also nicht: return os.path.abspath(sProjectPath)
+        return sProjectPath
 
     def loadProjectPaths(self):
         iCount = 0

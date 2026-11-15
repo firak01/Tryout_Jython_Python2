@@ -43,6 +43,7 @@ print
 
 Arrays.sort(colorsArray)
 
+
 System.out.print("sorted: ")
 for color in colorsArray:
     System.out.print(color) # uses java.lang.Object.toString

@@ -16,7 +16,7 @@ import os
 import sys
 
 
-class JavaClasspathLoaderZZZ(object):
+class JavaClasspathLoaderJYZ(object):
 
     def __init__(self, sBasePath=None):
 
@@ -40,8 +40,9 @@ class JavaClasspathLoaderZZZ(object):
         if sBasePath is None:
             sBasePath = self._sBasePath
             
-        sBasePathOffsetString = self.getBasePathOffsetString()
-    
+        # sBasePathOffsetString = self.getBasePathOffsetString()
+        sBasePathOffsetString = ""
+        
         if not os.path.isabs(sPath):
             sPath = os.path.join(sBasePath, sBasePathOffsetString, sPath)
             
