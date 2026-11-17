@@ -6,10 +6,12 @@ Created on 15.11.2026
 @author: Fritz Lindhauer
 '''
 
+import os
+
 # Hier käme die vor der Klasse definerte Methode hin, die dann zur staticMethod wird, bei der Methodic mit staticmethod(computePackageDepth)
 # def computePackageDepth(sFilePath, sProjectPath):
 def test4staticMethod():
-    print("Static Method")  
+    print("import gemacht: " + os.path.abspath(__file__))  
     
 # Die eigentliche Klasse
 class StringArrayJYZ(object):

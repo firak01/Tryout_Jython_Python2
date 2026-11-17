@@ -15,6 +15,7 @@ import os
 from basic.jyzBasic.reflection import *
 from basic.jyzBasic.util.abstractArray import *
 from basic.jyzBasic.util.datatype.string import *
+from basic.jyzBasic.util.file import *
 
 # Cool man kann auch einzelen Variablen importieren
 # Aber klaptt wohl nur im gleichen Sourcepath, nicht hier im tryout-Path 
@@ -89,36 +90,39 @@ class JythonKernelJYZ(object):
             # sFilePathTotal  =  r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py"
            
             # Nein, es ist nicht der Pfad der Datei, die den import macht, sondern
-            # Der Pfad zu dieser Datei, in der wir gerade sind:
-            #sFilePathTotal = r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\src\basic\jython\jazkernel\JythonKernelZZZ.py"
+            # Der Pfad zu dieser Datei, in der wir gerade sind:            
+            #print "\nstatischer Pfad:"
+            #print 'Variante a:         ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py"
+            #print 'Variante b:         ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\src\basic\jython\jazkernel\JythonKernelZZZ.py"
             
-                      
-            print("----- Pfadvergleich: Pfad zur eigenen Datei -----")
-            print("errechneter Pfad:")
-            print('File name :         ', os.path.basename(__file__))
-            print('Directory Name:     ', os.path.dirname(__file__))
-            print('abspath(__file__):  ', os.path.abspath(__file__))
             
-            print("statischer Pfad:")
-            print('Variante a:         ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py")
-            print('Variante b:         ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\src\basic\jython\jazkernel\JythonKernelZZZ.py")
+            print '----------------------------------------------'          
+            print "\n----- Pfadvergleich: Pfad zur eigenen Datei -----"
+            print "errechneter Pfad:"
+            print 'File name :           ', os.path.basename(__file__)
+            print 'Directory Name:       ', os.path.dirname(__file__)
+            print 'abspath(__file__):    ', os.path.abspath(__file__)
             
-          
+            sPathRepo = os.getenv("sRLZZZ")
+            sFilePathTotal = os.path.abspath(__file__)
+            sProjectNameComputed = FileEasyJYZ.extract_directory_first(sFilePathTotal, sPathRepo);
+            sPathRepoProject = os.path.join(sPathRepo,sProjectNameComputed)
             
-            print("----- Pfadvergleich: Pfad zum Repository Verzeichnis -----")
-            print("errechneter Pfad:")            
-            print('os.getenv("sRLZZZ"):  ', os.getenv("sRLZZZ") )           
-            print("statischer Pfad:")
-            print('Variante a:           ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen\Tryout_Jython_Python2")            
-            
+            print "\n----- Pfadvergleich: Pfad zum Repository Verzeichnis PLUS Projekt -----"
+            print "errechneter Pfad:"            
+            print 'os.getenv("sRLZZZ"):  ', sPathRepo 
+            print 'erechnetes Projekt:   ', sProjectNameComputed 
+            print 'repo + Projekt:       ', sPathRepoProject         
+            print "statischer Pfad:"
+            print 'zum Vergleich:        ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen\Tryout_Jython_Python2"            
+            print '----------------------------------------------'
             
           
             #iPackageDepth = ReflectCodeZZZ.computePackageDepth(sFilePathTotal, sProjectPath)
             #print "Pakettiefe: %s" %iPackageDepth
                   
-            sProjectPathRepo = os.getenv("sRLZZZ")
-            sFilePathTotal = os.path.abspath(__file__)
-            iWorkspaceDepth = ReflectCodeJYZ.computWorkspaceDepth(sFilePathTotal, sProjectPathRepo)
+           
+            iWorkspaceDepth = ReflectCodeJYZ.computWorkspaceDepth(sFilePathTotal, sPathRepoProject)
             print "Workspacetiefe immer um 1 erhöht: %s" %iWorkspaceDepth
             
             saPathOffset = ArrayUtilJYZ.createArray("..", iWorkspaceDepth)
