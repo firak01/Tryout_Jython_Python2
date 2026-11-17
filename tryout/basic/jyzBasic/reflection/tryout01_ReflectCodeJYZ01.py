@@ -6,13 +6,13 @@ Created on 15.11.2026
 @author: Fritz Lindhauer
 '''
 
-from basic.zBasic.reflection import *
+from basic.jyzBasic.reflection import *
 
 
 sProjectPath = r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2"
 sFilePathTotal = r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py"
 
-iPackageDepth = ReflectCodeZZZ.computePackageDepth(sFilePathTotal, sProjectPath)
+iPackageDepth = ReflectCodeJYZ.computePackageDepth(sFilePathTotal, sProjectPath)
 
 # Kommt sauber beim python run als Ausdruck heraus 
 # print("Pakettiefe: ", iDirectoryDepth)

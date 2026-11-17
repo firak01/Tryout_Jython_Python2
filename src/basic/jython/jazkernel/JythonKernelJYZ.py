@@ -55,7 +55,7 @@ class JythonKernelJYZ(object):
             raise KeyError("Projekt nicht registriert: " + str(sProjectName))
         sProjectPath = self.dProject[sProjectName]
         if not os.path.isabs(sProjectPath):
-            # TODOGOON20261115 #Ermittle die Anzahl der zurückzugehenden Verszeihnisse automatisch
+            # TODOGOON20261115 #Ermittle die Anzahl der zurückzugehenden Verzeichnisse automatisch
             '''           
             Erst aus dem Projekt zurück zum Root (Das ist der Root des Repositories)
             Wichtig: Ausgangslage ist das Verzeichnis, in dem die .py Datei liegt, in welcher über den Code die Java klassen importiert werden sollen, Z.B.
@@ -90,10 +90,34 @@ class JythonKernelJYZ(object):
            
             # Nein, es ist nicht der Pfad der Datei, die den import macht, sondern
             # Der Pfad zu dieser Datei, in der wir gerade sind:
-            sFilePathTotal = r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\src\basic\jython\jazkernel\JythonKernelZZZ.py"
+            #sFilePathTotal = r"C:\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\src\basic\jython\jazkernel\JythonKernelZZZ.py"
             
+                      
+            print("----- Pfadvergleich: Pfad zur eigenen Datei -----")
+            print("errechneter Pfad:")
+            print('File name :         ', os.path.basename(__file__))
+            print('Directory Name:     ', os.path.dirname(__file__))
+            print('abspath(__file__):  ', os.path.abspath(__file__))
+            
+            print("statischer Pfad:")
+            print('Variante a:         ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py")
+            print('Variante b:         ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen_V02\Tryout_Jython_Python2\src\basic\jython\jazkernel\JythonKernelZZZ.py")
+            
+          
+            
+            print("----- Pfadvergleich: Pfad zum Repository Verzeichnis -----")
+            print("errechneter Pfad:")            
+            print('os.getenv("sRLZZZ"):  ', os.getenv("sRLZZZ") )           
+            print("statischer Pfad:")
+            print('Variante a:           ', r"C:\HIS-Workspace\1fgl\repo\EclipseOxygen\Tryout_Jython_Python2")            
+            
+            
+          
             #iPackageDepth = ReflectCodeZZZ.computePackageDepth(sFilePathTotal, sProjectPath)
             #print "Pakettiefe: %s" %iPackageDepth
+                  
+            sProjectPathRepo = os.getenv("sRLZZZ")
+            sFilePathTotal = os.path.abspath(__file__)
             iWorkspaceDepth = ReflectCodeJYZ.computWorkspaceDepth(sFilePathTotal, sProjectPathRepo)
             print "Workspacetiefe immer um 1 erhöht: %s" %iWorkspaceDepth
             
