@@ -104,7 +104,7 @@ class ListSorted_ListInJavaJYZ(ArrayListZZZ):
         self.sort()
         return self
 
-    def add(self, s):
+    def addSorted(self, s):
         #Merke Python2 unterstützt den Parameterlosen Aufruf von super() nicht (erst Python3)
         #erg = super().__iadd__(s)
         
@@ -114,9 +114,24 @@ class ListSorted_ListInJavaJYZ(ArrayListZZZ):
         # Das ist die Liste Java Methode, gehe den direkten Weg und nicht über super... 
         # Geht nicht: super(ListSorted_ListInJavaJYZ, self).add(s)
         super(ListSorted_ListInJavaJYZ, self).add(s)
+        self.sort()
+        return self
+    
+    def add(self, s):
+        #Merke Python2 unterstützt den Parameterlosen Aufruf von super() nicht (erst Python3)
+        #erg = super().__iadd__(s)
+        
+        # Das ist eine ListSortedPYZ Methode
+        #erg = super(ListSorted_ListInJavaJYZ, self).__iadd__(s)
+       
+        # Das ist die Liste Java Methode  
+        # Geht auch: self.add(s), geht den direkten Weg und nicht über super...       
+        super(ListSorted_ListInJavaJYZ, self).add(s)
+        #hier zu sortieren gibt eine Endlosschleife.
+        #vermutlich weil def __iadd__ intern aufgerufen wird bei self.sort() und dort wieder self.add() verwendet wird 
         #self.sort()
         return self
-
+    
 
     def __iadd__(self, s):
         #Merke Python2 unterstützt den Parameterlosen Aufruf von super() nicht (erst Python3)
@@ -126,8 +141,9 @@ class ListSorted_ListInJavaJYZ(ArrayListZZZ):
         #erg = super(ListSorted_ListInJavaJYZ, self).__iadd__(s)
        
         # Das ist die Liste Java Methode, gehe den direkten Weg und nicht über super... 
-        # Geht nicht: super(ListSorted_ListInJavaJYZ, self).add(s)
-        self.add(s)
+        # Geht nicht: 
+        super(ListSorted_ListInJavaJYZ, self).add(s)
+        #self.add(s)
         self.sort()
         return self
 
@@ -175,12 +191,18 @@ if __name__ == "__main__":
     print("Java Test 01")
     l.addUnique(6666)  # beachte, das wird einsortiert
     l.__iadd__(5555)        # beachte, das wird einsortiert
-    l.add(4444)        # beachte, das wird NICHT einsortiert
+    l.add(4444)        # beachte, das wird NICHT einsortiert   
     print(l)
     print(type(l))
     print(l.getClass().getName())
-    print("Java Werte, debugString:    " ,l.computeDebugString)
+    print("1. Java Werte, debugString:    " ,l.computeDebugString)
     
+    # Danach ist alles sortiert
+    l.addSorted(3333)
+    print(l)
+    print(type(l))
+    print(l.getClass().getName())
+    print("2. Java Werte, debugString:    " ,l.computeDebugString)
     
     l.append(2)
     print(l)
@@ -210,13 +232,17 @@ if __name__ == "__main__":
     print(l)   
     print(type(l))
     print(l.getClass().getName())
-
-    print("Python Werte, debugString:    " ,l.computeDebugString)
+    print("1. Python Werte, debugString:    " ,l.computeDebugString)
    
     # Test nun eine Funktion der Java Klasse
     print("Java Test 02")
-    l.add(6666)
-    l.addUnique(5555) #da vorher schon mal 7777 eingegeben wurde darf das nicht aufgenommen werden.
+    l.add(2222)       #unsortiet eigegeben, Wert steht am Ende 
+    l.add(6666)       #unsortiet eigegeben, Wert steht am Ende
     print(type(l))
     print(l)
-    print("Java Werte, debugString:    " ,l.computeDebugString)
+    print("3. Java Werte, debugString:    " ,l.computeDebugString)
+    
+    l.addUnique(5555) #sortiert alle Werte und da vorher schon mal 5555 eingegeben wurde darf das nicht aufgenommen werden.
+    print(type(l))
+    print(l)
+    print("4. Java Werte, debugString:    " ,l.computeDebugString)
