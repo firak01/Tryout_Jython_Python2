@@ -28,8 +28,8 @@ print(sWorkspace)
 # Das reicht nicht, da in __init__.py der JavaClasspathLoaderZZZ nicht "nach aussen kommuniziert" wird.
 # from basic.jython.jazkernel import *
 # Also muss man die Klasse direkt importieren
-from basic.jython.jazkernel.JavaClasspathLoaderZZZ import JavaClasspathLoaderZZZ
-oLoader = JavaClasspathLoaderZZZ()
+from jyz.basic.jython.jazkernel.JavaClasspathLoaderJYZ import JavaClasspathLoaderJYZ
+oLoader = JavaClasspathLoaderJYZ()
 
 print("Basisverzeichnis (Repository-Verzeichnis):")
 print(oLoader.getBasePath())

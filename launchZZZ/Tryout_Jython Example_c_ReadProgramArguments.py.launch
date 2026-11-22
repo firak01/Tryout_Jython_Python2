@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xml version="1.0" encoding="UTF-8" standalone="no">
 <launchConfiguration type="org.python.pydev.debug.jythonLaunchConfigurationType">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/Tryout_Jython/Definitive_Guide_To_Jython/c05_Input_and_Output/Example_c_ReadProgramArguments.py"/>
