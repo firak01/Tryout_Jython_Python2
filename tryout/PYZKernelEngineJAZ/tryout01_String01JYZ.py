@@ -15,7 +15,18 @@ from java.lang import System
 
 #Binde den Classpath ein
 import sys
-sys.path.append(r"C:\1fgl\repo\EclipseOxygen_V02\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classes")
+
+#Lies den Pfad zum Repo aus der Umgebungsvariablen aus
+#damit ist das unabhänging von einem fest vorgegebenen Workspace auf einem Rechner
+#sys.path.append(r"C:\1fgl\repo\EclipseOxygen_V02\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classes")
+
+import os
+sWorkspace = os.environ.get("sRLZZZ") 
+if not sWorkspace:
+        raise Exception("Umgebungsvariable sRLZZZ nicht gesetzt!")
+
+sys.path.append(sWorkspace + r"\Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine\target\classes")
+
 # Merke: Das reicht aber nur, wenn in der Startumgebung bei den VM arguments steht, z.B.:
 #        -Dpython.path=c:\1fgl\workspace\EclipseOxygen_V02\ZKernelFileCollection\commons-lang-2.1.jar
 

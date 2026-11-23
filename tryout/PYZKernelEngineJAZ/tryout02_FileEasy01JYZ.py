@@ -9,6 +9,8 @@ Hier werden die notwendigen Pfade dürch den JavaClasspathLoaderZZZ.py
 aus einer durch Maven im Eclipse Projekt erstellten Textdatei ausgelesen.
 Die so ausgelesenen .jar Bibliotheken verden dem Pythonpath hinzugefügt.
 
+Zur Erstellung der Maven-Textdatei, s. in den Java Projekten der Ordner buildZZZ.
+
 Created on 04.11.2026
 
 @author: Fritz Lindhauer
@@ -24,11 +26,11 @@ if not sWorkspace:
 print("Eclipse Workspace Verzeichnis:")
 print(sWorkspace)
 
-# Classpath konfigurieren
-# Das reicht nicht, da in __init__.py der JavaClasspathLoaderZZZ nicht "nach aussen kommuniziert" wird.
-# from basic.jython.jazkernel import *
-# Also muss man die Klasse direkt importieren
-from jyz.basic.jython.jazkernel.JavaClasspathLoaderJYZ import JavaClasspathLoaderJYZ
+# Classpath programmatisch konfigurieren
+# Die kurze Form unten reicht, da in __init__.py des entsprechenden Pakets der JavaClasspathLoaderZZZ "nach aussen kommuniziert" wird.
+# Alternativ müsste man die Klasse direkt importieren
+# from jyz.basic.jython.jazkernel.JavaClasspathLoaderJYZ import JavaClasspathLoaderJYZ
+from jyz.basic.jython.jazkernel import JavaClasspathLoaderJYZ
 oLoader = JavaClasspathLoaderJYZ()
 
 print("Basisverzeichnis (Repository-Verzeichnis):")

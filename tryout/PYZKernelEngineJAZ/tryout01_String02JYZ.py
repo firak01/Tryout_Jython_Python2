@@ -22,18 +22,17 @@ if not sWorkspace:
 print("Eclipse Workspace Verzeichnis:")
 print(sWorkspace)
 
-# Classpath konfigurieren
-# Das reicht nicht, da in __init__.py der JavaClasspathLoaderZZZ nicht "nach aussen kommuniziert" wird.
-# from basic.jython.jazkernel import *
-# Also muss man die Klasse direkt importieren
-from jyz.basic.jython.jazkernel.JavaClasspathLoaderJYZ import JavaClasspathLoaderJYZ
+# Classpath programmatisch konfigurieren
+# Die kurze Form unten reicht, da in __init__.py des entsprechenden Pakets der JavaClasspathLoaderZZZ "nach aussen kommuniziert" wird.
+# Alternativ müsste man die Klasse direkt importieren
+# from jyz.basic.jython.jazkernel.JavaClasspathLoaderJYZ import JavaClasspathLoaderJYZ
+from jyz.basic.jython.jazkernel import JavaClasspathLoaderJYZ
 oLoader = JavaClasspathLoaderJYZ()
 
 print("Basisverzeichnis (Repository-Verzeichnis):")
 print(oLoader.getBasePath())
 
-#depth=5
-#sDepth='..\\' * 5
+#sDepth='..\\' * 6
 sDepth=oLoader.getBasePathOffsetString()
 
 print("Gesamtverzeichnis (im Repo):")
