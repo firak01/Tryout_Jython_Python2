@@ -122,6 +122,7 @@ class HtmlTreeViewer(swing.JFrame):
         self.contentPane.add(scrollpane)
         
 if __name__ == "__main__":\
-    HtmlTreeViewer(url="http://www.jython.org").show()
+    #HtmlTreeViewer(url="http://www.jython.org").show()
+    HtmlTreeViewer(url="https://fgl.hier-im-netz.de/pagIPLinkFGL.html").show()
 
 
