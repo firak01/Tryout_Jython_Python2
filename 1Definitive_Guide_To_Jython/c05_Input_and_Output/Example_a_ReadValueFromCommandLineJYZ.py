@@ -2,6 +2,7 @@
 
 '''
 Auszug aus dem Buch: "Definitive Guide to Jython"
+Merke: In Kapitel 9 wird mit optionparser komplexere Struktur von der Kommandozeile gelesen.
 
 Created on 02.11.2026
 

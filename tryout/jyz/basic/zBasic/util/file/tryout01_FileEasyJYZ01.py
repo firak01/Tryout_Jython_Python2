@@ -6,7 +6,7 @@ Created on 15.11.2026
 @author: Fritz Lindhauer
 '''
 
-from basic.jyzBasic.util.file import *
+from jyz.basic.zBasic.util.file import *
 
 
 sRepoPath = r"C:\1fgl\repo\EclipseOxygen"
