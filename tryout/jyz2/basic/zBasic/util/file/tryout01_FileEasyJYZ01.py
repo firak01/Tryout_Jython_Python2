@@ -12,7 +12,7 @@ from jyz.basic.zBasic.util.file import *
 sRepoPath = r"C:\1fgl\repo\EclipseOxygen"
 sFilePathTotal = r"C:\1fgl\repo\EclipseOxygen\Tryout_Jython_Python2\tryout\PYZKernelEngineJAZ\tryout04_LogZZZ.py"
 
-sProjectName = FileEasyJYZ.extract_directory_first(sFilePathTotal, sRepoPath)
+sProjectName = FileEasyJYZ.extract_directory_first_byDirectoryPath(sFilePathTotal, sRepoPath)
 
 # Kommt sauber beim python run als Ausdruck heraus 
 # print("Pakettiefe: ", iDirectoryDepth)

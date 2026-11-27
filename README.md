@@ -16,6 +16,8 @@ dann gibt es sogar einen Namenskonflikt, wenn die Klassen unterschiedlich heisse
 Damit das nicht geschieht müssen die Package-Pfade unterschiedlich lauten.<BR>
 <BR>Daher wird bei den Jython Projekten<BR>
 ein jyz Package aus Startpunkt verwenden.<BR>
+<BR>
+Projekte, die das JYZKernelEngine- Projekt nutzen, brauchen wiederum ihren eigenen Namespace, z.B. jyz2 als Startpackage
 
 
 
