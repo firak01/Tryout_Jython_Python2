@@ -14,11 +14,8 @@ Wichtig:<BR>
 Wenn man mit Python Packages arbeitet und Java Klassen einbindet,<BR>
 dann gibt es sogar einen Namenskonflikt, wenn die Klassen unterschiedlich heissen.<BR>
 Damit das nicht geschieht müssen die Package-Pfade unterschiedlich lauten.<BR>
-<BR>
-Bei meinem Java - Z-Kernel wurde schon seit jeher in den Package - Pfad<BR>
-ein zBasic eingebaut.<BR>
-Diesen Pfadteil nehme ich nun und werde bei den Jython Projekten<BR>
-ein jyzBasic verwenden.<BR>
+<BR>Daher wird bei den Jython Projekten<BR>
+ein jyz Package aus Startpunkt verwenden.<BR>
 
 
 
