@@ -21,7 +21,9 @@ Created on 04.11.2026
 # from jyz.basic.jython.jazkernel.JythonKernelJYZ import JythonKernelJYZ
 from jyz.basic.jython.jazkernel import *
 oJythonKernel = JythonKernelJYZ()
-oJythonKernel.addProject('JAZKernelEngine', 'Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine')
+#20261128: Man braucht den Projketnamen nicht mehr redundant übergeben
+#oJythonKernel.addProject('JAZKernelEngine', 'Projekt_Kernel02_JAZKernelEngine\JAZKernelEngine')
+oJythonKernel.addProject('JAZKernelEngine', 'Projekt_Kernel02_JAZKernelEngine')
 oJythonKernel.loadProjectPaths()
 
 
